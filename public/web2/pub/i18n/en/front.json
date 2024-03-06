@@ -2,7 +2,8 @@
     "welcome": "Welcome",
     "title": "Welcome to react using react-i18next",
     "description": {
-      "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-      "part2": "Switch language between english and german using buttons above."
-    }
-  }
+        "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
+        "part2": "Switch language between english and german using buttons above."
+    },
+    "new_i18n_key_1": "New test i18n"
+}
