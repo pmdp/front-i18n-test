@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
+
 import { useTranslation, Trans } from "react-i18next";
 
 function App() {
@@ -11,24 +12,24 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
+  const index = 11;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>{t("Welcome to React")}</h2>
-        <button onClick={() => changeLanguage("de")}>de</button>
-        <button onClick={() => changeLanguage("en")}>en</button>
-      </header>
-      <div className="App-intro">
-          <Trans>
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </Trans>
-          <Trans i18nKey="welcome">trans</Trans>
-          <Trans>
-            {index + 1} <a>xxx</a>
-          </Trans>
+    <Suspense fallback="loading">
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1>{t('welcome')}</h1>
+          <button onClick={() => changeLanguage("es")}>es</button>
+          <button onClick={() => changeLanguage("en")}>en</button>
+          <div className="App-intro">
+            
+          </div>
+        </header>
+
       </div>
-    </div>
+    </Suspense>
+
   );
 }
 
