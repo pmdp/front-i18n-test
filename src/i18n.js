@@ -1,7 +1,9 @@
 import i18n from 'i18next';
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from 'react-i18next';
-import Backend from 'i18next-http-backend';
+import Backend from 'i18next-chained-backend';
+import LocalStorageBackend from 'i18next-localstorage-backend';
+import HttpBackend from 'i18next-http-backend';
 
 i18n
     // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -17,6 +19,13 @@ i18n
     // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
         backend: {
+            backends: [
+                LocalStorageBackend,  // primary
+                HttpBackend  // fallback
+            ],
+            backendOptions: [{
+                /* options for primary backend */
+              }, {
                 // path where resources get loaded from, or a function
                 // returning a path:
                 // function(lngs, namespaces) { return customPath; }
@@ -37,8 +46,8 @@ i18n
                 //     ...etc
                 //    }
                 //   }
-                loadPath: '/web2/pub/i18n/{{lng}}/{{ns}}.json',
-              
+                loadPath: '/web2/{{ns}}/i18n/{{lng}}/front.json',
+    
                 // // path to post missing resources, or a function
                 // // function(lng, namespace) { return customPath; }
                 // // the returned path will interpolate lng, ns if provided like giving a static path
@@ -46,28 +55,28 @@ i18n
                 // // note that this only works when initialized with { saveMissing: true }
                 // // (see https://www.i18next.com/overview/configuration-options)
                 // addPath: '/locales/add/{{lng}}/{{ns}}',
-              
+    
                 // // parse data after it has been fetched
                 // // in example use https://www.npmjs.com/package/json5
                 // // here it removes the letter a from the json (bad idea)
                 // parse: function(data) { return data.replace(/a/g, ''); },
-              
+    
                 // // parse data before it has been sent by addPath
                 // parsePayload: function(namespace, key, fallbackValue) { return { key: fallbackValue || "" } },
-              
+    
                 // // parse data before it has been sent by loadPath
                 // // if value returned it will send a POST request
                 // parseLoadPayload: function(languages, namespaces) { return undefined },
-              
+    
                 // // allow cross domain requests
                 // crossDomain: false,
-              
+    
                 // // allow credentials on cross domain requests
                 // withCredentials: false,
-              
+    
                 // // overrideMimeType sets request.overrideMimeType("application/json")
                 // overrideMimeType: false,
-              
+    
                 // // custom request headers sets request.setRequestHeader(key, value)
                 // customHeaders: {
                 //   authorization: 'foo',
@@ -78,13 +87,13 @@ i18n
                 //   authorization: 'foo',
                 //   // ...
                 // }),
-              
+    
                 // requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
                 //   mode: 'cors',
                 //   credentials: 'same-origin',
                 //   cache: 'default'
                 // }
-              
+    
                 // // define a custom request function
                 // // can be used to support XDomainRequest in IE 8 and 9
                 // //
@@ -96,19 +105,20 @@ i18n
                 // //            'res' should be an object with a 'status' property and a 'data' property containing a stringified object instance beeing the key:value translation pairs for the
                 // //            requested language and namespace, or null in case of an error.
                 // request: function (options, url, payload, callback) {},
-              
+    
                 // // adds parameters to resource URL. 'example.com' -> 'example.com?v=1.3.5'
                 // queryStringParams: { v: '1.3.5' },
-              
+    
                 // reloadInterval: false // can be used to reload resources in a specific interval (milliseconds) (useful in server environments)
-            
+    
+            }]
         },
         fallbackLng: "en",
         debug: true,
 
         // have a common namespace used around the full app
-        ns: ["front"],
-        defaultNS: "front",
+        ns: ["pub", "pub"],
+        defaultNS: "pub",
 
         keySeparator: false, // we use content as keys
 
